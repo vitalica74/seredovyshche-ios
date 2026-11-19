@@ -1,0 +1,23 @@
+name: Seredovyshche
+options:
+  bundleIdPrefix: ua.seredovyshche
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: '16.0'
+    SWIFT_VERSION: '5.0'
+targets:
+  Seredovyshche:
+    type: application
+    platform: iOS
+    sources:
+      - path: Seredovyshche
+        excludes:
+          - Resources
+      - path: Seredovyshche/Resources
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ua.seredovyshche.app
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Середовище
+        CODE_SIGN_STYLE: Automatic

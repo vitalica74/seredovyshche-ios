@@ -1,0 +1,10 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Середовище</title>
+<style>body{font:17px -apple-system,sans-serif;margin:25px;color:#222;background:#fafafa}button{font:inherit;padding:12px;margin:5px;border-radius:10px}pre{white-space:pre-wrap}</style>
+<h1>Середовище</h1><p>iOS v0.1.0 — тест IndexedDB</p>
+<button id="save">Зберегти</button><button id="read">Прочитати</button><pre id="result">Очікування</pre>
+<script>
+const result=document.querySelector('#result');
+function db(){return new Promise((resolve,reject)=>{const r=indexedDB.open('ios-smoke',1);r.onupgradeneeded=()=>r.result.createObjectStore('values');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function test(write){try{const d=await db(),tx=d.transaction('values',write?'readwrite':'readonly'),s=tx.objectStore('values');const r=write?s.put(new Date().toISOString(),'saved'):s.get('saved');r.onsuccess=()=>result.textContent=write?'Збережено. Перезапустіть застосунок.':(r.result||'Запису немає');r.onerror=()=>result.textContent=String(r.error);tx.oncomplete=()=>d.close()}catch(e){result.textContent='Помилка IndexedDB: '+e}}
+document.querySelector('#save').onclick=()=>test(true);document.querySelector('#read').onclick=()=>test(false);
+</script></html>
